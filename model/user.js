@@ -37,27 +37,4 @@ var userSchema = new Schema({
   },
 });
 
-var blogSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, "title not provided"],
-  },
-  body: {
-    type: String,
-    required: [true, "body not provided"],
-  },
-  author: {
-    type: String,
-    required: [true, "author not provided"],
-  },
-  created: {
-    type: Date,
-    default: Date.now,
-  },
-  user_id: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  },
-});
-
 module.exports = mongoose.model("User", userSchema);

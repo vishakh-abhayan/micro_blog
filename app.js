@@ -3,6 +3,7 @@ const port = process.env.PORT || 3000;
 mongoose = require("mongoose");
 require("dotenv").config();
 userRoutes = require("./routes/user");
+microblogRoutes = require("./routes/microblog");
 
 const app = express();
 
@@ -24,6 +25,7 @@ process.on("uncaughtException", (err) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(userRoutes);
+app.use("/microblog", microblogRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
