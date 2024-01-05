@@ -2,33 +2,18 @@ const jwt = require("jsonwebtoken");
 User = require("../model/user");
 
 const verifyToken = (req, res, next) => {
-  if (
-    req.headers &&
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "JWT"
-  ) {
-    jwt.verify(
-      req.headers.authorization.split(" ")[1],
-      process.env.API_SECRET,
-      function (err, decode) {
-        if (err) req.user = undefined;
-        User.findOne({
-          _id: decode.id,
-        }).exec((err, user) => {
-          if (err) {
-            res.status(500).send({
-              message: err,
-            });
-          } else {
-            req.user = user;
-            next();
-          }
-        });
-      }
-    );
-  } else {
-    req.user = undefined;
-    next();
+  const token = req.headers.authorization.split(" ")[1];
+  if (!token) {
+    return res.status(403).send({ message: "No token provided!" });
   }
+
+  jwt.verify(token, process.env.API_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Unauthorized!" });
+    }
+    req.userId = decoded.id;
+    next();
+  });
 };
+
 module.exports = verifyToken;
