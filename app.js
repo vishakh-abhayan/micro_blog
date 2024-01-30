@@ -8,13 +8,12 @@ microblogRoutes = require("./routes/microblog");
 const app = express();
 
 try {
-  mongoose.connect(process.env.MONGO_URI, {
+  mongoose.createConnection(process.env.MONGO_URI, {
     // useNewUrlParser: true,
     // useUnifiedTopology: true,
   });
 } catch (err) {
-  console.log(err);
-  handleError(err);
+  throw err;
 }
 
 process.on("uncaughtException", (err) => {

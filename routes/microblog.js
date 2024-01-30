@@ -6,9 +6,6 @@ const {
 } = require("../controllers/microblog.controller");
 const verifyToken = require("../middlewares/authJWT");
 
-console.log(postMicroblog); // Should log the function
-console.log(verifyToken);
-
 router.post("/post", verifyToken, postMicroblog);
 router.get("/all", getAllMicroblogs);
 

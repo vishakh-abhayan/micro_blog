@@ -7,6 +7,10 @@ router.post("/register", signup);
 
 router.post("/login", signin);
 
+router.get("/stutus", (req, res) => {
+  res.send("working");
+});
+
 router.get("/hiddencontent", verifyToken, (req, res) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
